@@ -33,7 +33,7 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnVoltarFuncionarios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +51,7 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
             .addGap(0, 238, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jButton1.setText("Cadastrar");
 
@@ -66,8 +66,13 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PacoteJavaGUI/imagens/back.png"))); // NOI18N
-        jButton5.setText("Voltar");
+        btnVoltarFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PacoteJavaGUI/imagens/back.png"))); // NOI18N
+        btnVoltarFuncionarios.setText("Voltar");
+        btnVoltarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarFuncionariosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -83,7 +88,7 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69)
-                .addComponent(jButton5)
+                .addComponent(btnVoltarFuncionarios)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -92,7 +97,7 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton5)
+                        .addComponent(btnVoltarFuncionarios)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -131,6 +136,13 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnVoltarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarFuncionariosActionPerformed
+        // TODO add your handling code here:
+        JFMenuPrincipal abrir = new JFMenuPrincipal();
+        abrir.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVoltarFuncionariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -167,11 +179,11 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVoltarFuncionarios;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

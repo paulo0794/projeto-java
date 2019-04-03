@@ -5,6 +5,8 @@
  */
 package PacoteJavaGUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author manager
@@ -50,6 +52,11 @@ public class JFLogin extends javax.swing.JFrame {
         btnEntrar.setText("Entrar");
         btnEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEntrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         btnSair.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PacoteJavaGUI/imagens/sair.png"))); // NOI18N
@@ -116,6 +123,23 @@ public class JFLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        // TODO add your handling code here:
+        String nomeUsuario = txtUsuario.getText();
+        String senhaUsuario = txtSenha.getText();
+        
+        if (nomeUsuario.equals("etecia") && senhaUsuario.equals("etecia")){
+            JOptionPane.showMessageDialog(null,"Bem vindo");
+            //criando a instancia da janela
+            JFMenuPrincipal abrir = new JFMenuPrincipal();
+            //abrindo a janela
+            abrir.setVisible(true);
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null,"Erro ao acessar o sistema");
+        }
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
