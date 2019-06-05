@@ -218,9 +218,7 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
                                     .addComponent(jLabel4)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(0, 0, 0))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7)
@@ -314,6 +312,11 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
         Cadastrar.setText("Cadastrar");
 
         Pesquisar.setText("Pesquisar");
+        Pesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PesquisarActionPerformed(evt);
+            }
+        });
 
         Excluir.setText("Excluir");
         Excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -443,6 +446,12 @@ public class JFGerenciarFuncionarios extends javax.swing.JFrame {
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
+        // TODO add your handling code here:
+        JFPesquisa abrir = new JFPesquisa();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_PesquisarActionPerformed
 
     /**
      * @param args the command line arguments
