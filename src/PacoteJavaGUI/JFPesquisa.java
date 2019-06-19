@@ -1,6 +1,9 @@
 
 package PacoteJavaGUI;
 
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+
 
 public class JFPesquisa extends javax.swing.JFrame {
 
@@ -24,7 +27,7 @@ public class JFPesquisa extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablePesquisa = new javax.swing.JTable();
+        tblPesquisa = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         radioNome = new javax.swing.JRadioButton();
         radioCodigo = new javax.swing.JRadioButton();
@@ -32,15 +35,13 @@ public class JFPesquisa extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnPesquisar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
+        btnVoltarProdutos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tablePesquisa.setModel(new javax.swing.table.DefaultTableModel(
+        tblPesquisa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Código", "Nome", "QTD", "Valor"
@@ -49,20 +50,43 @@ public class JFPesquisa extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(tablePesquisa);
+        jScrollPane1.setViewportView(tblPesquisa);
+        if (tblPesquisa.getColumnModel().getColumnCount() > 0) {
+            tblPesquisa.getColumnModel().getColumn(0).setResizable(false);
+            tblPesquisa.getColumnModel().getColumn(1).setResizable(false);
+            tblPesquisa.getColumnModel().getColumn(2).setResizable(false);
+            tblPesquisa.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar por "));
 
         buttonGroup1.add(radioNome);
         radioNome.setText("Nome");
+        radioNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioNomeActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(radioCodigo);
         radioCodigo.setText("Codigo");
+        radioCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCodigoActionPerformed(evt);
+            }
+        });
 
         txtDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +125,7 @@ public class JFPesquisa extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PacoteJavaGUI/imagens/lupa.png"))); // NOI18N
@@ -118,35 +142,47 @@ public class JFPesquisa extends javax.swing.JFrame {
             }
         });
 
+        btnVoltarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PacoteJavaGUI/imagens/back.png"))); // NOI18N
+        btnVoltarProdutos.setText("Voltar");
+        btnVoltarProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarProdutosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPesquisar)
-                    .addComponent(btnLimpar))
-                .addGap(36, 36, 36))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnVoltarProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(btnPesquisar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoltarProdutos))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(66, 66, 66))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,7 +193,7 @@ public class JFPesquisa extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, Short.MAX_VALUE)
         );
 
         pack();
@@ -168,12 +204,34 @@ public class JFPesquisa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescricaoActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        // TODO add your handling code here:
+       
+       DefaultTableModel tbm = (DefaultTableModel)tblPesquisa.getModel();
+       for(int i = tbm.getRowCount()-1; i>=0; i--){
+           
+       tbm.removeRow(i);
+       }
+       
+       
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
+        
+        Connection con = Conexao.abrirConexao();
+        
+        
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void radioCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioCodigoActionPerformed
+
+    private void radioNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioNomeActionPerformed
+
+    private void btnVoltarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarProdutosActionPerformed
+        
+    }//GEN-LAST:event_btnVoltarProdutosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,6 +271,7 @@ public class JFPesquisa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnVoltarProdutos;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
@@ -221,7 +280,7 @@ public class JFPesquisa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton radioCodigo;
     private javax.swing.JRadioButton radioNome;
-    private javax.swing.JTable tablePesquisa;
+    private javax.swing.JTable tblPesquisa;
     private javax.swing.JTextField txtDescricao;
     // End of variables declaration//GEN-END:variables
 }

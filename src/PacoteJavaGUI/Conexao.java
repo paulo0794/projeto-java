@@ -13,7 +13,7 @@ public class Conexao{
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String url = "";
-            url += "jdbc:mysql://127.0.0.1/estacionamento?";
+            url += "jdbc:mysql://127.0.0.1/javadb?";
             url += "user=root&password=";
             con = DriverManager.getConnection(url);
             System.out.println("Conexão aberta");
